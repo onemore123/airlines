@@ -14,8 +14,10 @@ public class Flight {
     private String aircraft;
     private int businessSeatsNumber;
     private int economySeatsNumber;
+    private int businessSeatsAvailableNumber;
+    private int economySeatsAvailableNumber;
 
-    public Flight() {
+    protected Flight() {
     }
 
     public Flight(
@@ -66,6 +68,22 @@ public class Flight {
         this.economySeatsNumber = economySeatsNumber;
     }
 
+    public int getBusinessSeatsAvailableNumber() {
+        return businessSeatsAvailableNumber;
+    }
+
+    public void setBusinessSeatsAvailableNumber(int businessSeatsAvailableNumber) {
+        this.businessSeatsAvailableNumber = businessSeatsAvailableNumber;
+    }
+
+    public int getEconomySeatsAvailableNumber() {
+        return economySeatsAvailableNumber;
+    }
+
+    public void setEconomySeatsAvailableNumber(int economySeatsAvailableNumber) {
+        this.economySeatsAvailableNumber = economySeatsAvailableNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,6 +91,8 @@ public class Flight {
         Flight flight = (Flight) o;
         return businessSeatsNumber == flight.businessSeatsNumber &&
                 economySeatsNumber == flight.economySeatsNumber &&
+                businessSeatsAvailableNumber == flight.businessSeatsAvailableNumber &&
+                economySeatsAvailableNumber == flight.economySeatsAvailableNumber &&
                 id.equals(flight.id) &&
                 name.equals(flight.name) &&
                 aircraft.equals(flight.aircraft);
@@ -80,6 +100,19 @@ public class Flight {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, aircraft, businessSeatsNumber, economySeatsNumber);
+        return Objects.hash(id, name, aircraft, businessSeatsNumber, economySeatsNumber, businessSeatsAvailableNumber, economySeatsAvailableNumber);
+    }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", aircraft='" + aircraft + '\'' +
+                ", businessSeatsNumber=" + businessSeatsNumber +
+                ", economySeatsNumber=" + economySeatsNumber +
+                ", businessSeatsAvailableNumber=" + businessSeatsAvailableNumber +
+                ", economySeatsAvailableNumber=" + economySeatsAvailableNumber +
+                '}';
     }
 }
