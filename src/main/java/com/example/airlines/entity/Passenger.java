@@ -42,16 +42,6 @@ public class Passenger {
         this.phone = phone;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Passenger passenger = (Passenger) o;
-        return id.equals(passenger.id) &&
-                phone.equals(passenger.phone);
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -77,18 +67,19 @@ public class Passenger {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), id, phone);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Passenger)) return false;
+        Passenger passenger = (Passenger) o;
+        return getAge() == passenger.getAge() &&
+                getId().equals(passenger.getId()) &&
+                getPhone().equals(passenger.getPhone()) &&
+                getFirstName().equals(passenger.getFirstName()) &&
+                getLastName().equals(passenger.getLastName());
     }
 
     @Override
-    public String toString() {
-        return "Passenger{" +
-                "id=" + id +
-                ", phone='" + phone + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                '}';
+    public int hashCode() {
+        return Objects.hash(getId(), getPhone(), getFirstName(), getLastName(), getAge());
     }
 }
