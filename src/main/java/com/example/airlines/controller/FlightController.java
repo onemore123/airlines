@@ -1,6 +1,7 @@
 package com.example.airlines.controller;
 
 import com.example.airlines.repository.FlightRepository;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +14,7 @@ public class FlightController {
         this.flightRepository = flightRepository;
     }
 
-    @RequestMapping
+    @GetMapping
     public String list() {
         return flightRepository.findAll().toString();
     }
