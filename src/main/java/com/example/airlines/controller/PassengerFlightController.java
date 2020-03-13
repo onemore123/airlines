@@ -33,6 +33,6 @@ public class PassengerFlightController {
 
     @GetMapping("{id}")
     public Map<Enum<SeatType>, List<PassengerSeat>> listByFlightId(@PathVariable String id) {
-        //todo
+        return this.getPassengersByFlightFeature.getPassengersCountByFlightId(Long.parseLong(id));
     }
 }

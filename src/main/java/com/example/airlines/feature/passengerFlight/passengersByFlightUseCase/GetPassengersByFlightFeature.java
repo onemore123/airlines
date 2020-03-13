@@ -9,11 +9,11 @@ import com.example.airlines.exception.NotFoundException;
 import com.example.airlines.repository.FlightRepository;
 import com.example.airlines.repository.PassengerFlightRepository;
 import com.example.airlines.repository.PassengerRepository;
-import org.springframework.web.context.annotation.ApplicationScope;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@ApplicationScope
+@Service
 public class GetPassengersByFlightFeature {
     private final FlightRepository flightRepository;
     private final PassengerRepository passengerRepository;
