@@ -1,20 +1,20 @@
 package com.example.airlines.controller;
 
-import com.example.airlines.repository.PassengerRepository;
+import com.example.airlines.repository.FlightRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("flight")
 public class FlightController {
-    private final PassengerRepository passengerRepository;
+    private final FlightRepository flightRepository;
 
-    FlightController(PassengerRepository passengerRepository) {
-        this.passengerRepository = passengerRepository;
+    FlightController(FlightRepository flightRepository) {
+        this.flightRepository = flightRepository;
     }
 
     @RequestMapping
     public String list() {
-        return passengerRepository.findAll().toString();
+        return flightRepository.findAll().toString();
     }
 }
