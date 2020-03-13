@@ -21,3 +21,9 @@ curl -v -X GET "http://localhost:8080/flight/info?flightId=1&type=ECONOMY_CLASS"
 * *type* - contains one of two available seat types
     * BUSINESS_CLASS - business class available seats number
     * ECONOMY_CLASS - economy class available seats number
+
+### 3. Get passengers list by flight
+Use the flight unique identifier ("*/1*" in the end of the query) to get the list of passengers like in the example below:
+```
+curl -v -X GET "http://localhost:8080/passenger-flight/1" -H 'Content-Type:application/json'
+```
