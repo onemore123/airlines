@@ -27,6 +27,7 @@ public class AirlinesApplication {
 			FlightRepository flightRepository,
 			PassengerFlightRepository passengerFlightRepository
 	) {
+		// Set up dummy data to test the application
 		return (args) -> {
 			Flight testFlight = new Flight(
 					"S7 2502",
