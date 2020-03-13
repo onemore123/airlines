@@ -1,7 +1,6 @@
 package com.example.airlines.repository;
 
 import com.example.airlines.entity.Flight;
-import com.example.airlines.entity.Passenger;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
