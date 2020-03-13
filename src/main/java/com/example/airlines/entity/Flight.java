@@ -1,5 +1,7 @@
 package com.example.airlines.entity;
 
+import com.example.airlines.enums.SeatType;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,6 +18,8 @@ public class Flight {
     private int economySeatsNumber;
     private int businessSeatsAvailableNumber;
     private int economySeatsAvailableNumber;
+    private String departure = "OVB";
+    private String destination;
 
     protected Flight() {
     }
@@ -24,12 +28,16 @@ public class Flight {
             String name,
             String aircraft,
             int businessSeatsNumber,
-            int economySeatsNumber
+            int economySeatsNumber,
+            String destination
     ) {
         this.name = name;
         this.aircraft = aircraft;
         this.businessSeatsNumber = businessSeatsNumber;
         this.economySeatsNumber = economySeatsNumber;
+        this.businessSeatsAvailableNumber = businessSeatsNumber;
+        this.economySeatsAvailableNumber = economySeatsNumber;
+        this.destination = destination;
     }
 
     public Long getId() {
@@ -84,23 +92,53 @@ public class Flight {
         this.economySeatsAvailableNumber = economySeatsAvailableNumber;
     }
 
+    public void decrementAvailableSeatsNumberBySeatType(Enum<SeatType> seatType) {
+        if (seatType.equals(SeatType.BUSINESS_CLASS) && this.getBusinessSeatsAvailableNumber() > 0) {
+            this.setBusinessSeatsAvailableNumber(this.getBusinessSeatsAvailableNumber() - 1);
+        } else if (seatType.equals(SeatType.ECONOMY_CLASS) && this.getEconomySeatsAvailableNumber() > 0) {
+            this.setEconomySeatsAvailableNumber(this.getEconomySeatsAvailableNumber() - 1);
+        }
+    }
+
+    public int getAvailableSeatsTotalNumber() {
+        return this.getBusinessSeatsAvailableNumber() + this.getEconomySeatsAvailableNumber();
+    }
+
+    public String getDeparture() {
+        return departure;
+    }
+
+    public void setDeparture(String departure) {
+        this.departure = departure;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Flight)) return false;
         Flight flight = (Flight) o;
-        return businessSeatsNumber == flight.businessSeatsNumber &&
-                economySeatsNumber == flight.economySeatsNumber &&
-                businessSeatsAvailableNumber == flight.businessSeatsAvailableNumber &&
-                economySeatsAvailableNumber == flight.economySeatsAvailableNumber &&
-                id.equals(flight.id) &&
-                name.equals(flight.name) &&
-                aircraft.equals(flight.aircraft);
+        return getBusinessSeatsNumber() == flight.getBusinessSeatsNumber() &&
+                getEconomySeatsNumber() == flight.getEconomySeatsNumber() &&
+                getBusinessSeatsAvailableNumber() == flight.getBusinessSeatsAvailableNumber() &&
+                getEconomySeatsAvailableNumber() == flight.getEconomySeatsAvailableNumber() &&
+                getId().equals(flight.getId()) &&
+                getName().equals(flight.getName()) &&
+                getAircraft().equals(flight.getAircraft()) &&
+                getDeparture().equals(flight.getDeparture()) &&
+                getDestination().equals(flight.getDestination());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, aircraft, businessSeatsNumber, economySeatsNumber, businessSeatsAvailableNumber, economySeatsAvailableNumber);
+        return Objects.hash(getId(), getName(), getAircraft(), getBusinessSeatsNumber(), getEconomySeatsNumber(), getBusinessSeatsAvailableNumber(), getEconomySeatsAvailableNumber(), getDeparture(), getDestination());
     }
 
     @Override
@@ -113,6 +151,8 @@ public class Flight {
                 ", economySeatsNumber=" + economySeatsNumber +
                 ", businessSeatsAvailableNumber=" + businessSeatsAvailableNumber +
                 ", economySeatsAvailableNumber=" + economySeatsAvailableNumber +
+                ", departure='" + departure + '\'' +
+                ", destination='" + destination + '\'' +
                 '}';
     }
 }

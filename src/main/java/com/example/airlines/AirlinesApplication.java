@@ -1,10 +1,13 @@
 package com.example.airlines;
 
+import com.example.airlines.entity.Flight;
 import com.example.airlines.entity.Passenger;
+import com.example.airlines.entity.PassengerFlight;
+import com.example.airlines.enums.SeatType;
 import com.example.airlines.helper.PassengerGeneratorHelper;
+import com.example.airlines.repository.FlightRepository;
+import com.example.airlines.repository.PassengerFlightRepository;
 import com.example.airlines.repository.PassengerRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,16 +21,47 @@ public class AirlinesApplication {
 		SpringApplication.run(AirlinesApplication.class, args);
 	}
 
-	Logger logger = LoggerFactory.getLogger(AirlinesApplication.class);
 	@Bean
-	public CommandLineRunner demo(PassengerRepository repository) {
+	public CommandLineRunner demo(
+			PassengerRepository passengerRepository,
+			FlightRepository flightRepository,
+			PassengerFlightRepository passengerFlightRepository
+	) {
 		return (args) -> {
-			List<Passenger> fakePassengersCount = PassengerGeneratorHelper.generatePassengersCount(5);
-			for (Passenger passenger : fakePassengersCount) {
-				repository.save(passenger);
+			Flight testFlight = new Flight(
+					"S7 2502",
+					"A-321",
+					8,
+					156,
+					"DOM"
+			);
+			flightRepository.save(testFlight);
 
-				logger.info(passenger.toString());
+			List<Passenger> fakePassengersCount = PassengerGeneratorHelper.generatePassengersCount(5);
+			int luckyPassengersCount = 0;
+			SeatType seatType = SeatType.ECONOMY_CLASS;
+			for (Passenger passenger : fakePassengersCount) {
+				if (testFlight.getAvailableSeatsTotalNumber() > 0) {
+					passengerRepository.save(passenger);
+					if (luckyPassengersCount < 8) {
+						seatType = SeatType.BUSINESS_CLASS;
+					}
+
+					PassengerFlight passengerFlight = PassengerFlight.create(
+							testFlight.getId(),
+							passenger.getId(),
+							seatType,
+							luckyPassengersCount
+					);
+					passengerFlightRepository.save(passengerFlight);
+					testFlight.decrementAvailableSeatsNumberBySeatType(seatType);
+
+					luckyPassengersCount++;
+				} else {
+					break;
+				}
 			}
+			flightRepository.save(testFlight);
 		};
 	}
 }
