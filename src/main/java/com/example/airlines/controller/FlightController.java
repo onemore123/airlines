@@ -24,7 +24,7 @@ public class FlightController {
     }
 
     @GetMapping("/info")
-    public int getAvailableSeats(@RequestParam Long flightId, @RequestParam String type) {
+    public int getAvailableSeats(@RequestParam(value = "flightId") Long flightId, @RequestParam(value = "type") String type) {
         Flight flight = flightRepository.findById(flightId).orElseThrow(NotFoundException::new);
 
         if (SeatType.BUSINESS_CLASS.name().equals(type)) {
