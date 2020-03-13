@@ -82,4 +82,15 @@ public class Passenger {
     public int hashCode() {
         return Objects.hash(getId(), getPhone(), getFirstName(), getLastName(), getAge());
     }
+
+    @Override
+    public String toString() {
+        return "Passenger{" +
+                "id=" + id +
+                ", phone='" + phone + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
